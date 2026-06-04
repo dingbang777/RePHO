@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="Recovering Physically Plausible Human-Object Interactions from Monocular Videos" name="title" />
+  <meta content="Project page for a CVPR 2026 paper on recovering physically plausible human-object interactions from monocular videos." name="description" />
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="English" name="language" />
+  <meta content="Dingbang Huang" name="author" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CVPR 2026 | Physically Plausible HOI from Monocular Videos</title>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap-4.4.1.js"></script>
+  <link href="css/bootstrap-4.4.1.css" rel="stylesheet" />
+
+  <script src="js/video-carousel.js"></script>
+  <link href="css/theme.css" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <section>
+    <div class="jumbotron text-center mt-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 style="font-weight: bold">
+              <b>
+                Recovering <span style="color: #9bb7c9">Physically Plausible</span><br>
+                <span style="color: #c2ab97">Human-Object Interactions</span> from Monocular Videos
+              </b>
+            </h1>
+            <h4 style="color:#5a6268;">CVPR 2026 (Highlight)</h4>
+            <hr>
+            <a href="https://dingbang777.github.io/">Dingbang Huang</a><sup>1,2</sup>&nbsp;
+            <a href="https://www.cs.utexas.edu/~evouga/">Etienne Vouga</a><sup>1</sup>&nbsp;
+            <a href="https://www.cs.utexas.edu/~huangqx/">Qixing Huang</a><sup>1</sup>&nbsp;
+            <a href="https://geopavlakos.github.io/">Georgios Pavlakos</a><sup>1</sup>
+            <p><sup>1</sup>University of Texas at Austin&nbsp;&nbsp;&nbsp;<sup>2</sup>Shanghai Jiao Tong University</p>
+
+            <div class="row justify-content-center">
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://arxiv.org/abs/2606." role="button">
+                    <i class="fas fa-file-alt"></i>
+                    <b>Arxiv</b>
+                  </a>
+                </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="assets/SupMat.pdf" role="button">
+                    <i class="fas fa-file-alt"></i>
+                    <b>SupMat</b>
+                  </a>
+                </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://github.com/dingbang777/RePHO" role="button">
+                    <i class="fas fa-code"></i>
+                    <b>Code</b>
+                  </a>
+                </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="https://www.youtube.com/watch?v=suYGJYmFbyg" role="button">
+                    <i class="fas fa-video"></i>
+                    <b>Video</b>
+                  </a>
+                </p>
+              </div>
+              <div class="column">
+                <p class="mb-5">
+                  <a class="btn btn-large btn-light" href="#citation" role="button">
+                    <i class="ai ai-google-scholar"></i>
+                    <b>Citation</b>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>TL;DR</h3>
+          <hr style="margin-top: 0px" />
+          <p class="text-left">
+            (1) We study recovery of physically plausible whole-body human-object interactions from monocular video. <br/>
+            (2) We start from noisy kinematic reconstruction and refine it with reinforcement learning in a physics simulator. <br/>
+            (3) We introduce adaptive sampling with dual propagation and kinematics updates to exploit reliable frames in noisy sequences. <br/>
+            (4) Our method improves physical plausibility metrics on both BEHAVE and InterCap while preserving strong 3D reconstruction quality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Results on BEHAVE</h3>
+          <hr style="margin-top: 0px" />
+          <div id="BehaveVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Abstract</h3>
+          <hr style="margin-top: 0px" />
+        </div>
+      </div>
+    </div>
+
+    <!--
+    <div class="paper-figure-shell">
+      <img class="paper-figure" src="assets/teaser_cvpr2026_fixed.png" alt="Teaser figure" />
+    </div>
+    -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-left" style="margin-top: 1rem;">
+            In this paper, we present a method to reconstruct physically plausible human-object interactions (HOI) from monocular videos.
+            While existing kinematic-based approaches produce visually plausible motion, they often result in physically implausible artifacts such as interpenetration and object floating.
+            To overcome these issues, we introduce a physics-guided reconstruction framework.
+            We begin with a kinematic estimate and then refine it by training a policy with reinforcement learning in a physics simulator.
+            Because kinematic estimates are typically noisy, naive RL training can fail.
+            We therefore propose an adaptive sampling strategy with a dual self-updating mechanism that identifies the most informative and reliable frames.
+            Our process progressively improves reconstruction quality and yields physically consistent HOI sequences.
+            We demonstrate clear improvements in physical plausibility metrics on BEHAVE and InterCap.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Results on InterCap</h3>
+          <hr style="margin-top: 0px" />
+          <div id="InterCapVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Results on in-the-wild videos</h3>
+          <hr style="margin-top: 0px" />
+          <div id="WildVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Method</h3>
+          <hr style="margin-top: 0px" />
+        </div>
+      </div>
+    </div>
+
+    <div class="paper-figure-shell">
+      <img class="paper-figure" src="assets/pipeline_cvpr2026_fixed.png" alt="Pipeline figure" />
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p style="margin-top: 1rem;">
+            <strong>Overview of our two-stage pipeline.</strong>
+            In the first stage, we use an off-the-shelf kinematic reconstruction method, VisTracker, to recover human-object interactions in global coordinates from the input video.
+            These kinematic estimates are often noisy and may contain incorrect contact, penetration, or floating artifacts.
+            In the second stage, we train a physics-based tracking policy to imitate the reference kinematics inside a simulator with reinforcement learning.
+            The policy takes the current physical state and future reference states as input, and produces actions that preserve both motion fidelity and physical plausibility.
+            Adaptive sampling, dual propagation, and kinematics updates make the training stable even when the input sequence is severely corrupted.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="paper-figure-shell paper-figure-shell-tall">
+      <img class="paper-figure" src="assets/dual_update_fixed.png" alt="Dual propagation with kinematics update figure" />
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p style="margin-top: 1rem;">
+            <strong>Overview of our dual propagation with kinematics update mechanism.</strong>
+            Kinematic estimates from monocular videos are often highly noisy.
+            Rollouts initialized from these noisy states typically fail quickly, whereas rollouts that start from frames with accurate contact configurations succeed for much longer.
+            To propagate these physically plausible states across the sequence, we train two HOI tracking policies simultaneously: a forward policy that performs forward rollouts and a backward policy that performs backward rollouts.
+            States from the successful portions of previous rollouts are used to update the corresponding noisy kinematic frames, and subsequent rollouts initialize from these improved states.
+            Overall, this dual propagation and kinematics update mechanism enables the policy to learn from extremely noisy reconstruction results and gradually recover the entire HOI sequence in a physically plausible manner.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Results on generated videos</h3>
+          <hr style="margin-top: 0px" />
+          <div id="GeneratedVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Comparisons with InterMimic</h3>
+          <hr style="margin-top: 0px" />
+          <div id="InterMimicComparisonVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-results-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3>Forward and Backward Visualization</h3>
+          <hr style="margin-top: 0px" />
+          <div id="ForwardBackwardVideos" class="video-carousel-frame"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container" id="citation">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Citation</h3>
+        <hr style="margin-top: 0px" />
+        <pre class="selectable" style="background-color: #e9eeef; padding: 1.5em 1.5em; border-radius: 15px"><code>@inproceedings{huang2026physicalhoi,
+  title={Recovering Physically Plausible Human-Object Interactions from Monocular Videos},
+  author={Huang, Dingbang and Vouga, Etienne and Huang, Qixing and Pavlakos, Georgios},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2026}
+}</code></pre>
+        <hr />
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center" style="margin-bottom: 10px">
+    Website adapted from the HSMR project page template and related academic project-page layouts.
+  </footer>
+
+  <script>
+    const behaveVideos = [
+      { src: "website_videos/b/b1.mp4" },
+      { src: "website_videos/b/b2.mp4" },
+      { src: "website_videos/b/b3.mp4" },
+      { src: "website_videos/b/b4.mp4" },
+      { src: "website_videos/b/b5.mp4" }
+    ];
+    const interCapVideos = [
+      { src: "website_videos/i/i1.mp4" },
+      { src: "website_videos/i/i2.mp4" },
+      { src: "website_videos/i/i3.mp4" },
+      { src: "website_videos/i/i4.mp4" },
+      { src: "website_videos/i/i5.mp4" }
+    ];
+    const wildVideos = [
+      { src: "website_videos/w/w1.mp4" },
+      { src: "website_videos/w/w2.mp4" },
+      { src: "website_videos/w/w3.mp4" },
+      { src: "website_videos/w/w4.mp4" },
+      { src: "website_videos/w/w5.mp4" },
+      { src: "website_videos/w/w6.mp4" }
+    ];
+    const generatedVideos = [
+      { src: "website_videos/g/g1.mp4" },
+      { src: "website_videos/g/g2.mp4" },
+      { src: "website_videos/g/g3.mp4" }
+    ];
+    const interMimicComparisonVideos = [
+      { src: "website_videos/p/bp1.mp4" },
+      { src: "website_videos/p/bp2.mp4" },
+      { src: "website_videos/p/ip1.mp4" }
+    ];
+    const forwardBackwardVideos = [
+      { src: "website_videos/r/r1.mp4" }
+    ];
+
+    createVideoCarousel(behaveVideos, "BehaveVideos", { controls: true, interval: 7000, aspectRatio: "3 / 2" });
+    createVideoCarousel(interCapVideos, "InterCapVideos", { controls: true, interval: 7000, aspectRatio: "2 / 1" });
+    createVideoCarousel(wildVideos, "WildVideos", { controls: true, interval: 7000, aspectRatio: "3 / 1" });
+    createVideoCarousel(generatedVideos, "GeneratedVideos", { controls: true, interval: 7000, aspectRatio: "3 / 1" });
+    createVideoCarousel(interMimicComparisonVideos, "InterMimicComparisonVideos", { controls: true, interval: 7000, aspectRatio: "3 / 2" });
+    createVideoCarousel(forwardBackwardVideos, "ForwardBackwardVideos", { controls: true, interval: 7000, aspectRatio: "3 / 2" });
+  </script>
+</body>
+</html>
